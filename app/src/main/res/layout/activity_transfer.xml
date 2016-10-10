@@ -11,50 +11,56 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pramont.transfer.TransferActivity">
 
-    <EditText
-        android:id="@+id/cantidadEdTx"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="$0.0"
-        android:inputType="numberDecimal"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/lb_cantidad"
-        android:layout_toEndOf="@+id/lb_cantidad"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp"/>
-
     <TextView
-        android:id="@+id/lb_cantidad"
+        android:id="@+id/lb_id_paypal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cantidad:"
-        android:layout_alignBaseline="@+id/cantidadEdTx"
-        android:layout_alignBottom="@+id/cantidadEdTx"
+        android:text="ID:"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/ctaPayPal"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="no hay cuenta"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:id="@+id/cta_paypal"
+        android:layout_alignBottom="@+id/lb_id_paypal"
+        android:layout_toRightOf="@+id/lb_id_paypal"
+        android:layout_toEndOf="@+id/lb_id_paypal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34dp"
+        android:text="Paso 1"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView2"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Siguiente"
+        android:id="@+id/siguiente1"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="Agregar cuenta PayPal"
-        android:layout_below="@+id/cantidadEdTx"
+        android:id="@+id/ctaPayPal"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp"
-        android:id="@+id/ctaPayPal"/>
+        android:layout_alignParentStart="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Transferir"
-        android:layout_marginLeft="29dp"
-        android:layout_marginStart="29dp"
-        android:id="@+id/button2"
-        android:layout_alignBaseline="@+id/ctaPayPal"
-        android:layout_alignBottom="@+id/ctaPayPal"
-        android:layout_toRightOf="@+id/ctaPayPal"
-        android:layout_toEndOf="@+id/ctaPayPal"/>
 
 </RelativeLayout>

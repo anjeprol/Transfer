@@ -2,6 +2,7 @@ package com.pramont.transfer;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
     private String mCtaPaypay;
     private TextView mCtaPaypalTextView;
     private Button mCtaButton;
+    private Button mNextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,10 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
 
         mCtaPaypalTextView = (TextView) findViewById(R.id.cta_paypal);
         mCtaButton = (Button) findViewById(R.id.ctaPayPal);
+        mNextButton = (Button) findViewById(R.id.siguiente1);
 
         mCtaButton.setOnClickListener(this);
+        mNextButton.setOnClickListener(this);
     }
 
     private void alertCta(){
@@ -86,6 +90,15 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
             case R.id.ctaPayPal:
                 alertCta();
                 break;
+            case R.id.siguiente1:
+                nextStep();
+                break;
         }
+    }
+
+    private void nextStep() {
+        Intent myIntent = new Intent(TransferActivity.this,PagoDev.class);
+        myIntent.putExtra("PAYPAL_ID",mCtaPaypay);
+        startActivity(myIntent);
     }
 }

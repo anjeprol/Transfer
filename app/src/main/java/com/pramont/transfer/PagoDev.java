@@ -33,6 +33,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     private String mPayPalID;
     private double mCantidadFinal;
     private static final double PESO_A_DOLAR = 18.885;
+    private boolean isSecondPay = false;
 
     /**
      * - Set to PayPalConfiguration.ENVIRONMENT_PRODUCTION to move real money.
@@ -92,6 +93,10 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void cargo() {
+        String cargo = getDolar(mCantidadEditText.getText().toString());
+        double value = Double.parseDouble(cargo);
+        value = value * 0.01;
+
           /*
          * PAYMENT_INTENT_SALE will cause the payment to complete immediately.
          * Change PAYMENT_INTENT_SALE to
@@ -101,7 +106,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
          *
          * Also, to include additional payment details and an item list, see getStuffToBuy() below.
          */
-        PayPalPayment thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE);
+        PayPalPayment thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE,String.format("%.2f", value),"Comisión desarrollador");
 
         /*
          * See getStuffToBuy(..) for examples of some available payment options.
@@ -118,11 +123,11 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     }
 
 
-    private PayPalPayment getThingToBuy(String paymentIntent) {
-        String dolar = getDolar(mCantidadEditText.getText().toString());
-        return new PayPalPayment(new BigDecimal(dolar),
+    private PayPalPayment getThingToBuy(String paymentIntent,String cargo, String concepto) {
+        //String cargo = getDolar(mCantidadEditText.getText().toString());
+        return new PayPalPayment(new BigDecimal(cargo),
                                                 "USD",
-                                                "Transferencia",
+                                                concepto,
                                                 paymentIntent);
     }
 
@@ -134,10 +139,11 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
         ((TextView) findViewById(R.id.convertidoTV)).setText(String.format("%.2f", newDolar));
         ((TextView) findViewById(R.id.PayPalComisionTV)).setText(String.format( "%.2f", newDolar*0.029 ));
         ((TextView) findViewById(R.id.cantidadMasComTv)).setText(String.format( "%.2f", mCantidadFinal));
+        mSiguienteButton.setVisibility(View.VISIBLE);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(newDolar);
-        return stringBuilder.toString();
+        StringBuilder cantidadDolarStr = new StringBuilder();
+        cantidadDolarStr.append(newDolar);
+        return cantidadDolarStr.toString();
     }
 
     @Override
@@ -148,6 +154,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
                         data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
+                        isSecondPay = true;
                         Log.i(TAG, confirm.toJSONObject().toString(4));
                         Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
                         /**

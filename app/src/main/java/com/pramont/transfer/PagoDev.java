@@ -29,8 +29,10 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "TransferLog";
     private EditText mCantidadEditText;
     private Button mSiguienteButton;
+    private Button mCalcular;
     private String mPayPalID;
-    private static final double PESO_A_DOLAR = 0.052950;
+    private double mCantidadFinal;
+    private static final double PESO_A_DOLAR = 18.885;
 
     /**
      * - Set to PayPalConfiguration.ENVIRONMENT_PRODUCTION to move real money.
@@ -66,8 +68,10 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
 
         mCantidadEditText = (EditText) findViewById(R.id.cantidadEdTx);
         mSiguienteButton = (Button) findViewById(R.id.siguiente2);
+        mCalcular = (Button) findViewById(R.id.calcularBtn);
 
         mSiguienteButton.setOnClickListener(this);
+        mCalcular.setOnClickListener(this);
 
     }
 
@@ -77,7 +81,14 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
             case R.id.siguiente2:
                 cargo();
                 break;
+            case R.id.calcularBtn:
+                calcular();
+                break;
         }
+    }
+
+    private void calcular() {
+        String dolar = getDolar(mCantidadEditText.getText().toString());
     }
 
     private void cargo() {
@@ -117,7 +128,13 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
 
     private String getDolar(String cantidadPesos){
         double value = Double.parseDouble(cantidadPesos);
-        double newDolar = value * PESO_A_DOLAR;
+        double newDolar = value / PESO_A_DOLAR;
+
+        mCantidadFinal = newDolar * 1.029;
+        ((TextView) findViewById(R.id.convertidoTV)).setText(String.format("%.2f", newDolar));
+        ((TextView) findViewById(R.id.PayPalComisionTV)).setText(String.format( "%.2f", newDolar*0.029 ));
+        ((TextView) findViewById(R.id.cantidadMasComTv)).setText(String.format( "%.2f", mCantidadFinal));
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(newDolar);
         return stringBuilder.toString();

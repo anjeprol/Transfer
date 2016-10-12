@@ -33,7 +33,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     private String mPayPalID;
     private double mCantidadFinal;
     private static final double PESO_A_DOLAR = 18.885;
-    private boolean isSecondPay = false;
+    private boolean isSecondPay ;
 
     /**
      * - Set to PayPalConfiguration.ENVIRONMENT_PRODUCTION to move real money.
@@ -96,6 +96,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
         String cargo = getDolar(mCantidadEditText.getText().toString());
         double value = Double.parseDouble(cargo);
         value = value * 0.01;
+        isSecondPay = false;
 
           /*
          * PAYMENT_INTENT_SALE will cause the payment to complete immediately.
@@ -146,6 +147,39 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
         return cantidadDolarStr.toString();
     }
 
+    private String getFinalPayString(){
+        StringBuilder finalPayString = new StringBuilder();
+        finalPayString.append(mCantidadFinal);
+        return finalPayString.toString();
+    }
+
+    private void cargoFinal(){
+           /*
+         * PAYMENT_INTENT_SALE will cause the payment to complete immediately.
+         * Change PAYMENT_INTENT_SALE to
+         *   - PAYMENT_INTENT_AUTHORIZE to only authorize payment and capture funds later.
+         *   - PAYMENT_INTENT_ORDER to create a payment for authorization and capture
+         *     later via calls from your server.
+         *
+         * Also, to include additional payment details and an item list, see getStuffToBuy() below.
+         */
+        PayPalPayment thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE,String.format("%.2f", mCantidadFinal),"Transferencia solicitada");
+
+        /*
+         * See getStuffToBuy(..) for examples of some available payment options.
+         */
+
+        Intent intent = new Intent(PagoDev.this, PaymentActivity.class);
+
+        // send the same configuration for restart resiliency
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PAYMENT) {
@@ -154,7 +188,6 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
                         data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
-                        isSecondPay = true;
                         Log.i(TAG, confirm.toJSONObject().toString(4));
                         Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
                         /**
@@ -166,7 +199,12 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
                          * For sample mobile backend interactions, see
                          * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
                          */
+
                         displayResultText("Confirmación de transferencia de PayPal");
+                        if(!isSecondPay){
+                            cargoFinal();
+                            isSecondPay=true;
+                        }
 
 
                     } catch (JSONException e) {

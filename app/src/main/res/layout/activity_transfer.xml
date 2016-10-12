@@ -12,16 +12,6 @@
     tools:context="com.pramont.transfer.TransferActivity">
 
     <TextView
-        android:id="@+id/lb_id_paypal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID:"
-        android:layout_marginTop="28dp"
-        android:layout_below="@+id/ctaPayPal"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="no hay cuenta"
@@ -61,15 +51,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo de cambio MX:"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView"/>
-
     <EditText
         android:layout_width="80dp"
         android:layout_height="wrap_content"
@@ -81,6 +62,26 @@
         android:layout_alignBottom="@+id/textView"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2"/>
+
+    <TextView
+        android:id="@+id/lb_id_paypal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID:"
+        android:layout_above="@+id/tipCambioEdTx"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo de cambio MX:"
+        android:id="@+id/textView"
+        android:layout_below="@+id/ctaPayPal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="114dp"/>
 
 
 </RelativeLayout>

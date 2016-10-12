@@ -28,11 +28,12 @@ import java.math.BigDecimal;
 public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "TransferLog";
     private EditText mCantidadEditText;
+    private TextView mTipoCambioTextView;
     private Button mSiguienteButton;
     private Button mCalcular;
     private String mPayPalID;
     private double mCantidadFinal;
-    private static final double PESO_A_DOLAR = 18.885;
+    private double PESO_A_DOLAR ;
     private boolean isSecondPay ;
 
     /**
@@ -54,7 +55,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
     private static final int REQUEST_CODE_PROFILE_SHARING = 3;
 
-    private static PayPalConfiguration config = new PayPalConfiguration()
+    private static PayPalConfiguration configPayDev = new PayPalConfiguration()
             .environment(CONFIG_ENVIRONMENT)
             .clientId(CONFIG_CLIENT_ID)
             // The following are only used in PayPalFuturePaymentActivity.
@@ -67,7 +68,12 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pago_dev);
 
+        mPayPalID = getIntent().getExtras().getString("PAYPAL_ID");
+        PESO_A_DOLAR = Double.parseDouble( getIntent().getExtras().getString("TIPO_CAMBIO"));
+
         mCantidadEditText = (EditText) findViewById(R.id.cantidadEdTx);
+        mTipoCambioTextView = (TextView) findViewById(R.id.tipCambioTV);
+        mTipoCambioTextView.setText(""+PESO_A_DOLAR);
         mSiguienteButton = (Button) findViewById(R.id.siguiente2);
         mCalcular = (Button) findViewById(R.id.calcularBtn);
 
@@ -121,7 +127,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
         Intent intent = new Intent(PagoDev.this, PaymentActivity.class);
 
         // send the same configuration for restart resiliency
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configPayDev);
 
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 
@@ -159,6 +165,13 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void cargoFinal(){
+        PayPalConfiguration configPayTransfer = new PayPalConfiguration()
+                .environment(CONFIG_ENVIRONMENT)
+                .clientId(mPayPalID)
+                // The following are only used in PayPalFuturePaymentActivity.
+                .merchantName("Transfer")
+                .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
+                .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
            /*
          * PAYMENT_INTENT_SALE will cause the payment to complete immediately.
          * Change PAYMENT_INTENT_SALE to
@@ -177,7 +190,7 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
         Intent intent = new Intent(PagoDev.this, PaymentActivity.class);
 
         // send the same configuration for restart resiliency
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configPayTransfer);
 
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 

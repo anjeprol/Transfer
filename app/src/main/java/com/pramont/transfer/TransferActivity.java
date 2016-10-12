@@ -13,10 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TransferActivity extends AppCompatActivity implements View.OnClickListener {
     private String mCtaPaypay;
+    private String mTipCambio;
     private TextView mCtaPaypalTextView;
+    private EditText mTipoDeCambioEditText;
     private Button mCtaButton;
     private Button mNextButton;
 
@@ -26,12 +29,15 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_transfer);
 
         mCtaPaypalTextView = (TextView) findViewById(R.id.cta_paypal);
+        mTipoDeCambioEditText = (EditText) findViewById(R.id.tipCambioEdTx);
         mCtaButton = (Button) findViewById(R.id.ctaPayPal);
         mNextButton = (Button) findViewById(R.id.siguiente1);
 
         mCtaButton.setOnClickListener(this);
         mNextButton.setOnClickListener(this);
     }
+
+
 
     private void alertCta(){
         // get alert_cta.xml view
@@ -98,7 +104,14 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
 
     private void nextStep() {
         Intent myIntent = new Intent(TransferActivity.this,PagoDev.class);
+        mCtaPaypay = mCtaPaypalTextView.getText().toString().trim();
+        mTipCambio = mTipoDeCambioEditText.getText().toString().trim();
+        if(!mCtaPaypay.isEmpty() && !mTipCambio.isEmpty()){
         myIntent.putExtra("PAYPAL_ID",mCtaPaypay);
+        myIntent.putExtra("TIPO_CAMBIO",mTipCambio);
         startActivity(myIntent);
+        } else {
+            Toast.makeText(this,"Faltan datos, tipo de cambio o la cuenta PayPal",Toast.LENGTH_LONG).show();
+        }
     }
 }

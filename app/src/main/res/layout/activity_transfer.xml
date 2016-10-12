@@ -24,7 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="no hay cuenta"
+        android:hint="no hay cuenta"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:id="@+id/cta_paypal"
@@ -76,8 +76,9 @@
         android:lines="1"
         android:hint="0.0"
         android:inputType="numberDecimal"
-        android:id="@+id/editText"
-        android:layout_centerVertical="true"
+        android:id="@+id/tipCambioEdTx"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2"/>
 

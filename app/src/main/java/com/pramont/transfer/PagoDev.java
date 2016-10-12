@@ -89,7 +89,12 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void calcular() {
-        String dolar = getDolar(mCantidadEditText.getText().toString());
+        String cantidad = mCantidadEditText.getText().toString().trim();
+        if(!cantidad.isEmpty()){
+            getDolar(cantidad);
+        }else {
+            Toast.makeText(this,"Por favor introducir una cantidad",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void cargo() {

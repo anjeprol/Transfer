@@ -45,11 +45,11 @@ public class PagoDev extends AppCompatActivity implements View.OnClickListener{
      * - Set to PayPalConfiguration.ENVIRONMENT_NO_NETWORK to kick the tires
      * without communicating to PayPal's servers.
      */
-    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
+    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_PRODUCTION;
 
     // note that these credentials will differ between live & sandbox environments.
     //SandBox devID
-    private static final String CONFIG_CLIENT_ID = "AfvDWvb54zxtxFLMUF-YR2hQeJD-sRky3hxbX9V0Buhdi0-nbvm8vWZ6dE8Ry3qOxCo99ftzlY-0Wkn1";
+    private static final String CONFIG_CLIENT_ID = "AZLX8-vxk6VCqm27DN08x5eg4OKr6UlVoSrGq1b430wbpjsJV5ySYydPHdcuTSnxsoigMLJZiOlMVe_Z";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;

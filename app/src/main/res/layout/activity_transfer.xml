@@ -35,18 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="Agregar cuenta PayPal"
-        android:id="@+id/ctaPayPal"
-        android:layout_marginTop="56dp"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
         android:text="Siguiente"
+        android:textColor="@color/white"
+        android:background="@drawable/mybutton"
         android:id="@+id/siguiente1"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
@@ -82,6 +73,19 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="114dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/mybutton"
+        android:text="Agregar cuenta PayPal"
+        android:id="@+id/ctaPayPal"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
 
 </RelativeLayout>

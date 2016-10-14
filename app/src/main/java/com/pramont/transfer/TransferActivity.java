@@ -3,6 +3,8 @@ package com.pramont.transfer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class TransferActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String FILE_NAME = "payPalCuenta";
+    private static final String DATA = "data";
     private String mCtaPaypay;
     private String mTipCambio;
     private TextView mCtaPaypalTextView;
@@ -32,6 +36,11 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
         mTipoDeCambioEditText = (EditText) findViewById(R.id.tipCambioEdTx);
         mCtaButton = (Button) findViewById(R.id.ctaPayPal);
         mNextButton = (Button) findViewById(R.id.siguiente1);
+
+        //Reading the last phone number used
+        SharedPreferences prefs = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        String ctaPayPal = prefs.getString(DATA, "");
+        mCtaPaypalTextView.setText(ctaPayPal);
 
         mCtaButton.setOnClickListener(this);
         mNextButton.setOnClickListener(this);
@@ -100,6 +109,17 @@ public class TransferActivity extends AppCompatActivity implements View.OnClickL
                 nextStep();
                 break;
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Saving the last phone number used
+        SharedPreferences prefs = getSharedPreferences(FILE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        //Data is the key to retrieve the information
+        editor.putString(DATA, mCtaPaypalTextView.getText().toString());
+        editor.commit();
     }
 
     private void nextStep() {

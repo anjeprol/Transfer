@@ -80,7 +80,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:background="@drawable/mybutton"
-        android:text="Agregar cuenta PayPal"
+        android:text=" Agregar cuenta PayPal  "
         android:id="@+id/ctaPayPal"
         android:layout_marginTop="56dp"
         android:layout_below="@+id/textView2"
